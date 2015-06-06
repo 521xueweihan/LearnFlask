@@ -6,6 +6,7 @@ app = Flask(__name__)
 @app.route('/hello/')
 @app.route('/hello/<name>')
 def hello(name = None):
+    #渲染template目录下的hello.html
     return render_template('hello.html', name=name)
 
 if __name__ == '__main__':
