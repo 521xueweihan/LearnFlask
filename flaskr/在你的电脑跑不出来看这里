@@ -1,0 +1,7 @@
+1.请确定你的电脑安装了flask，sqlite
+2.数据库是否初始化？没有的话执行以下操作：
+a.cd flaskr文件夹，输入python
+b.在python交互环境下输入：from flaskr import init_db
+c.init_db()
+3.开启网站服务：python flaskr.py
+
