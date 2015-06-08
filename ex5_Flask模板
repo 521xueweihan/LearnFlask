@@ -1,0 +1,44 @@
+概述：
+    在Flask中，Jinja2默认配置如下：
+        A.扩展名为.html,.htm,.xml和.xhtml的模板中开启自动转义。
+        B.在模板中可以使用{% autoescape %}来手动设置是否转义。
+        C.Flask在Jinja2环境中加入一些全局函数和辅助对象(下面写的方法)
+
+1.|safe的作用是关闭转义字符
+    转义就是对特殊字符进行转义。特殊字符指的是HTML。
+    三种方法关闭转义：
+        a.用Markup对象封装。
+        b.在模板中使用|safe过滤
+        c.临时关闭整个系统的自动转义——{% autoescape false%}
+        
+2.{{ 这里放变量 }}
+
+3.注册过滤器
+    两个方法：手动放入jinja_env中，要么使用template_filter()装饰器
+  a:    @app.template_filter('reverse')
+        def reverse_filter(s):
+            return s[::-1] # 倒序列表
+
+  b:    def reverse_filter(s):
+            return s[::-1]
+        app.jinja_env.filters['reverse'] = reverse_filter
+一旦注册成功，你就可以在模板中像Jinja2的内建过滤其一样使用过滤器了。
+        {% for x in mylist | reverse %} # 这里就可以按照你注册的过滤器来进行操作
+        {% endfor%}
+        
+4.环境处理器的作用是把新的变量自动引入模板环境中,返回是一个字典。——用修饰器：@app.context_processor
+    传递的可以是一个变量，也可以是一个函数
+传递变量：
+        @app.context_processor
+        def inject_user():
+            return dict(user = g.user)
+            
+传递函数：
+        @app.context_processor
+        def utility_processor(): # 处理货币转换的一个方法
+            def format_price(amount, currency = u'$'):
+                return u'{0:.2f}{1}'.format(amount, currency)
+            return dict(format_price = format_price)
+    上面的例子把format_price函数传递给所有模板，可以在模板中随意调用
+    {{ format_price(0.33) }}
+    
