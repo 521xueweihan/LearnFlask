@@ -1,0 +1,18 @@
+<!doctype html>
+<title>Hello from Flask</title>
+{% if name %}
+    <h1>Hello {{name}}!</h1>
+    {% for x in nav %}
+        <li><a href=''>{{ x }}</a></li>
+    {% endfor %}
+{% else %}
+    <h1>Hello World!</h1>
+{% endif %}
+<div>
+<h1>regist!</h1>
+<form action="" method="post" >
+username:<input type="test" name="username" /><br />
+<input type="submit" value="regist" />
+
+</form>
+</div>
